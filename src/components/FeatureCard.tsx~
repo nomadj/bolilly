@@ -1,0 +1,50 @@
+// src/components/FeatureCard.tsx
+"use client";
+import React from "react";
+import ReactPlayer from "react-player";
+import { FC } from "react";
+import { Box, SimpleGrid, Heading, Text } from "@chakra-ui/react";
+
+interface FeatureCardProps {
+  title: string;
+  description: string;
+}
+
+const FeatureCard: FC<FeatureCardProps> = ({ title, description }) => {
+    const videos = [
+	{ url: "https://youtu.be/EmCZwcvVr5I?si=KMB_1w-UeJSnQ1vt", title: "Daily Video", key: "1"},
+	{ url: "https://youtu.be/Y9OUu8q0Dpc?si=3HaC0Rio_wFnhqny", title: "Daily Video", key: "2"}
+    ];
+  return (
+      <Box p={4}>  
+      <Heading mb={6} size="5xl" textAlign="left">
+        Daily Video
+      </Heading>
+
+      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
+        {videos.map((vid, idx) => (
+          <Box
+            key={idx}
+            p={3}
+            borderWidth="1px"
+            borderRadius="2xl"
+            shadow="md"
+            bg="white"
+            _dark={{ bg: "gray.800" }}
+	    height={{ base: "200px", md: "350px", lg: "500px" }}
+          >
+	    <ReactPlayer
+              src={vid.url}
+              width="100%"
+              height="100%"
+              controls
+              style={{ borderRadius: "1rem", overflow: "hidden" }}
+            />
+          </Box>
+        ))}
+      </SimpleGrid>
+    </Box>
+  );
+};
+
+export default FeatureCard;

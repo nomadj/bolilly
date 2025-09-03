@@ -1,0 +1,56 @@
+"use client";
+
+import { useState } from "react";
+import { FC } from "react";
+import { Box, Button, Flex, Text, Link } from "@chakra-ui/react";
+
+const METAMASK_DOWNLOAD = "https://metamask.io/download.html";
+
+const ConnectWalletPrompt: FC = () => {
+  const [hasMetaMask, setHasMetaMask] = useState(
+    typeof window !== "undefined" && (window as any).ethereum
+  );
+  const [attemptedConnect, setAttemptedConnect] = useState(false);
+
+  const handleClick = () => {
+    if (!hasMetaMask) {
+      // Redirect to MetaMask download
+      window.open(METAMASK_DOWNLOAD, "_blank");
+    } else {
+      setAttemptedConnect(true);
+      // Here you could trigger wallet connection logic
+      console.log("Attempting to connect wallet...");
+    }
+  };
+
+  return (
+    <Flex
+      as="footer"
+      width="100%"
+      p={4}
+      bg="gray.100"
+      align="center"
+      justify="center"
+      mt={4}
+      position="sticky"
+      bottom={0}
+    >
+      <Box textAlign="center">
+        {!hasMetaMask && (
+          <Text mb={2} fontSize="lg">
+            To interact with this feature, please install MetaMask.
+          </Text>
+        )}
+        <Button colorScheme="orange" onClick={handleClick}>
+          {hasMetaMask
+            ? attemptedConnect
+              ? "Connecting..."
+              : "Connect Wallet"
+            : "Get MetaMask"}
+        </Button>
+      </Box>
+    </Flex>
+  );
+};
+
+export default ConnectWalletPrompt;
