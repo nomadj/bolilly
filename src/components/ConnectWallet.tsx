@@ -4,11 +4,13 @@ import { useState } from "react";
 import { ethers } from "ethers";
 import { Button } from "@chakra-ui/react";
 
+type EthereumEvent = "accountsChanged" | "chainChanged" | "disconnect" | "connect";
+
 interface EthereumProvider {
   isMetaMask?: boolean;
   request?: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
-  on?: (eventName: string, callback: (...args: any[]) => void) => void;
-  removeListener?: (eventName: string, callback: (...args: any[]) => void) => void;
+  on?: (eventName: EthereumEvent, callback: (args: unknown) => void) => void;
+  removeListener?: (eventName: EthereumEvent, callback: (args: unknown) => void) => void;
 }
 
 interface EthereumWindow extends Window {
