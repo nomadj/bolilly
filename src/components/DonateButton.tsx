@@ -57,9 +57,10 @@ export default function DonateButton() {
   }
 
   async function sendTransaction() {
+    const donationAddress = process.env.NEXT_PUBLIC_DONATION_ADDRESS;
     try {
       setLoading(!loading);
-
+      console.log("Donation Address: ", donationAddress);
       const signer = await connectWallet();
       if (!signer) return;
 
@@ -70,7 +71,7 @@ export default function DonateButton() {
       const provider = signer.provider;
       const network = await provider.getNetwork();
       const tx = await signer.sendTransaction({
-        to: "0x211108b43AF00993274668676afa7032ac66D88E", // Bob's address
+        to: donationAddress, // Bob's address
         value: ethers.parseEther(amount),
 
       });

@@ -7,36 +7,25 @@ import { toaster } from "@/components/ui/toaster";
 
 const METAMASK_DOWNLOAD = "https://metamask.io/download.html";
 
-interface EthereumProvider {
-  isMetaMask?: boolean;
-  request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
-}
-
-interface EthereumWindow extends Window {
-  ethereum?: EthereumProvider;
-}
-
 const ConnectWalletPrompt: FC = () => {
   const [hasMetaMask] = useState(
-    typeof window !== "undefined" && (window as EthereumWindow).ethereum !== undefined
+    typeof window !== "undefined" && (window as any).ethereum
   );
   const [account, setAccount] = useState<string | null>(null);
   const [connecting, setConnecting] = useState(false);
 
   const handleClick = async () => {
     if (!hasMetaMask) {
+      // Redirect to MetaMask download
       window.open(METAMASK_DOWNLOAD, "_blank");
       return;
     }
 
     try {
       setConnecting(true);
-      const ethereum = (window as EthereumWindow).ethereum;
-      if (!ethereum) throw new Error("Ethereum provider not found");
-
-      const accounts = (await ethereum.request({
+      const accounts: string[] = await (window as any).ethereum.request({
         method: "eth_requestAccounts",
-      })) as string[];
+      });
 
       if (accounts && accounts.length > 0) {
         const connected = accounts[0];
