@@ -29,7 +29,7 @@ export default function DonateButton() {
       if (!window.ethereum) return;
       const provider = new ethers.BrowserProvider(window.ethereum);
       const network = await provider.getNetwork();
-      setNative(CHAIN_NATIVE[network.chainId] || "ETH");
+      setNative(CHAIN_NATIVE[Number(network.chainId)] || "ETH");
     }
     detectChain();
     if (window.ethereum) {
