@@ -3,7 +3,7 @@
 import React from "react";
 import ReactPlayer from "react-player";
 import { FC } from "react";
-import { Box, SimpleGrid, Heading, Text } from "@chakra-ui/react";
+import { Box, SimpleGrid, Heading } from "@chakra-ui/react";
 
 interface FeatureCardProps {
   title: string;

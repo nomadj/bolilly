@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import { Button, ButtonGroup, VStack, Input } from "@chakra-ui/react";
+import { Button, VStack, Input } from "@chakra-ui/react";
 import { Toaster, toaster } from "@/components/ui/toaster";
 
 const CHAIN_NATIVE: Record<number, string> = {
@@ -18,7 +18,7 @@ const CHAIN_NATIVE: Record<number, string> = {
 };
 
 export default function DonateButton() {
-  const [account, setAccount] = useState<string | null>(null);
+  // const [account, setAccount] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [amount, setAmount] = useState<string>("");
   const [native, setNative] = useState("ETH");
@@ -69,7 +69,7 @@ export default function DonateButton() {
         return;
       }
       const provider = signer.provider;
-      const network = await provider.getNetwork();
+      // const network = await provider.getNetwork();
       const tx = await signer.sendTransaction({
         to: donationAddress, // Bob's address
         value: ethers.parseEther(amount),

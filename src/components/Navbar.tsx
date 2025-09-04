@@ -1,7 +1,7 @@
 // src/components/Navbar.tsx
 "use client";
 import { FC } from "react";
-import { Flex, Heading, VStack, HStack, Text } from "@chakra-ui/react";
+import { Flex, Heading, VStack, Text } from "@chakra-ui/react";
 import DonateButton from "@/components/DonateButton";
 
 interface NavbarProps {

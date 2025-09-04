@@ -1,13 +1,19 @@
 import { ethers } from "ethers";
 
+// Narrowed Ethereum provider type
+interface EthereumProvider {
+  isMetaMask?: boolean;
+  request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
+}
+
 declare global {
   interface Window {
-    ethereum?: any;
+    ethereum?: EthereumProvider;
   }
 }
 
 /**
- * Get an ethers provider from Metamask
+ * Get an ethers provider from MetaMask
  */
 export function getProvider(): ethers.BrowserProvider | null {
   if (typeof window !== "undefined" && window.ethereum) {
@@ -17,7 +23,7 @@ export function getProvider(): ethers.BrowserProvider | null {
 }
 
 /**
- * Request user accounts from Metamask
+ * Request user accounts from MetaMask
  */
 export async function connectWallet(): Promise<string | null> {
   const provider = getProvider();
@@ -42,7 +48,7 @@ export async function getSigner(): Promise<ethers.JsonRpcSigner | null> {
  */
 export function getContract(
   address: string,
-  abi: any,
+  abi: ethers.InterfaceAbi,
   signerOrProvider?: ethers.JsonRpcSigner | ethers.BrowserProvider
 ) {
   const provider = signerOrProvider || getProvider();
