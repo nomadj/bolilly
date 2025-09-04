@@ -100,7 +100,6 @@ export default function DonateButton() {
       toaster.create({
         title: "Donation Confirmed",
         description: `Tx Hash: ${tx.hash}`,
-        status: "success",
         duration: 9000,
         isClosable: true,
         position: "top-right",
