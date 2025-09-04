@@ -18,7 +18,7 @@ const CHAIN_NATIVE: Record<number, string> = {
 };
 
 export default function DonateButton() {
-  // const [account, setAccount] = useState<string | null>(null);
+  const [account, setAccount] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [amount, setAmount] = useState<string>("");
   const [native, setNative] = useState("ETH");
