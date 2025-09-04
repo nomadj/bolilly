@@ -100,8 +100,7 @@ export default function DonateButton() {
       toaster.create({
         title: "Donation Confirmed",
         description: `Tx Hash: ${tx.hash}`,
-        duration: 9000,
-        position: "top-right",
+        duration: 9000
       });
     } catch (err) {
       console.error(err);
