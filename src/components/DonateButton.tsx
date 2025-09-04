@@ -19,8 +19,8 @@ const CHAIN_NATIVE: Record<number, string> = {
 
 interface EthereumProvider {
   request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
-  on: (eventName: string, callback: (...args: any[]) => void) => void;
-  removeListener: (eventName: string, callback: (...args: any[]) => void) => void;
+  on: (eventName: "chainChanged" | "accountsChanged", callback: (arg: string | string[]) => void) => void;
+  removeListener: (eventName: "chainChanged" | "accountsChanged", callback: (arg: string | string[]) => void) => void;
 }
 
 interface EthereumWindow extends Window {
