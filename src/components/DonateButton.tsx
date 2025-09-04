@@ -101,7 +101,6 @@ export default function DonateButton() {
         title: "Donation Confirmed",
         description: `Tx Hash: ${tx.hash}`,
         duration: 9000,
-        isClosable: true,
         position: "top-right",
       });
     } catch (err) {
