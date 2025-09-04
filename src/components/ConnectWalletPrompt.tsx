@@ -100,7 +100,7 @@ const ConnectWalletPrompt: FC = () => {
           <Button
             colorScheme="orange"
             onClick={handleClick}
-            isLoading={connecting}
+            loading={connecting}
           >
             {hasMetaMask ? "Connect Wallet" : "Get MetaMask"}
           </Button>
