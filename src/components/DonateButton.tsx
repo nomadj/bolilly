@@ -108,10 +108,7 @@ export default function DonateButton() {
       toaster.create({
         title: "Transaction Failed",
         description: "Please try again.",
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-        position: "top-right",
+        duration: 9000
       });
     } finally {
       setLoading(false);
