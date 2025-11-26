@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 import { FC } from "react";
 import { Box, Button, Flex, Text, Input } from "@chakra-ui/react";
 import { toaster } from "@/components/ui/toaster";
@@ -13,23 +13,24 @@ const METAMASK_DOWNLOAD = "https://metamask.io/download.html";
 const CONTRACT_ADDRESS = "0xa5E820bFf4C729CF6e411C460c5D2F5855192D68";
 const CONTRACT_ABI = contractJson.abi;
 
-interface EthereumProvider {
-  isMetaMask?: boolean;
-  request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
-}
-interface EthereumWindow extends Window {
-  ethereum?: EthereumProvider;
+// Type-safe provider
+interface EthereumProvider extends ethers.ExternalProvider {}
+
+declare global {
+  interface Window {
+    ethereum?: EthereumProvider;
+  }
 }
 
 const ConnectWalletPrompt: FC = () => {
-  const [hasMetaMask] = useState(
-    typeof window !== "undefined" && (window as EthereumWindow).ethereum !== undefined
+  const [hasMetaMask] = useState<boolean>(
+    typeof window !== "undefined" && !!window.ethereum
   );
   const [account, setAccount] = useState<string | null>(null);
-  const [connecting, setConnecting] = useState(false);
+  const [connecting, setConnecting] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
 
-  const handleClick = async () => {
+  const handleConnect = async () => {
     if (!hasMetaMask) {
       window.open(METAMASK_DOWNLOAD, "_blank");
       return;
@@ -37,19 +38,15 @@ const ConnectWalletPrompt: FC = () => {
 
     try {
       setConnecting(true);
-      const ethereum = (window as EthereumWindow).ethereum;
-      if (!ethereum) throw new Error("Ethereum provider not found");
+      const ethereum = window.ethereum!;
+      const provider = new ethers.BrowserProvider(ethereum);
+      const accounts = (await provider.send("eth_requestAccounts", [])) as string[];
 
-      const accounts = (await ethereum.request({
-        method: "eth_requestAccounts",
-      })) as string[];
-
-      if (accounts?.length > 0) {
-        const connected = accounts[0];
-        setAccount(connected);
+      if (accounts.length > 0) {
+        setAccount(accounts[0]);
         toaster.create({
           title: "Wallet Connected",
-          description: `Address: ${connected}`,
+          description: `Address: ${accounts[0]}`,
           type: "success",
           duration: 5000,
         });
@@ -68,15 +65,35 @@ const ConnectWalletPrompt: FC = () => {
     } finally {
       setConnecting(false);
     }
+  };
 
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFile(e.target.files?.[0] || null);
   };
 
   const handleMint = async () => {
-    try {
-      if (!account) throw new Error("No wallet connected");
-      if (!file) throw new Error("No image file selected");
+    if (!account) {
+      toaster.create({
+        title: "Wallet Not Connected",
+        description: "Please connect your wallet first",
+        type: "warning",
+        duration: 5000,
+      });
+      return;
+    }
 
-      // 1️⃣ Upload image + metadata via Next.js API (server-side handles Pinata keys)
+    if (!file) {
+      toaster.create({
+        title: "No File Selected",
+        description: "Please select an image file",
+        type: "warning",
+        duration: 5000,
+      });
+      return;
+    }
+
+    try {
+      // 1️⃣ Upload image + metadata via Next.js API
       const formData = new FormData();
       formData.append("file", file);
       formData.append(
@@ -93,16 +110,16 @@ const ConnectWalletPrompt: FC = () => {
       });
 
       if (!uploadRes.ok) throw new Error("Failed to upload to Pinata API");
-      const { metadataUri } = await uploadRes.json();
+      const { metadataUri } = (await uploadRes.json()) as { metadataUri: string };
 
-      // 2️⃣ Mint NFT using ethers
-      const provider = new ethers.BrowserProvider(
-        (window as EthereumWindow).ethereum as any
-      );
+      // 2️⃣ Mint NFT
+      const ethereum = window.ethereum!;
+      const provider = new ethers.BrowserProvider(ethereum);
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
 
-      const tx = await contract.mintStudent(metadataUri, { gasLimit: 500000 });
+      const tx = await contract.mintStudent(metadataUri, { gasLimit: 500_000 });
+
       toaster.create({
         title: "Minting...",
         description: `Transaction submitted: ${tx.hash}`,
@@ -111,6 +128,7 @@ const ConnectWalletPrompt: FC = () => {
       });
 
       await tx.wait();
+
       toaster.create({
         title: "Mint Successful",
         description: `Tx confirmed: ${tx.hash}`,
@@ -149,17 +167,13 @@ const ConnectWalletPrompt: FC = () => {
 
         {account ? (
           <Flex gap={4} justify="center" align="center" direction="column">
-            <Input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setFile(e.target.files?.[0] || null)}
-            />
+            <Input type="file" accept="image/*" onChange={handleFileChange} />
             <Button onClick={handleMint}>Mint NFT</Button>
           </Flex>
         ) : (
           <Button
             colorScheme="orange"
-            onClick={handleClick}
+            onClick={handleConnect}
             isLoading={connecting}
           >
             {hasMetaMask ? "Connect Wallet" : "Get MetaMask"}
