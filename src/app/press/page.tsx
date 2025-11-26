@@ -7,9 +7,6 @@ import {
   Container,
   useBreakpointValue,
   Tabs,
-  TabList,
-  Tab,
-  TabPanel,
 } from "@chakra-ui/react";
 import Bio from "@/components/press/Bio";
 import VideoArchive from "@/components/press/VideoArchive";
@@ -17,7 +14,7 @@ import AudioArchive from "@/components/press/AudioArchive";
 import PhotoGallery from "@/components/press/PhotoGallery";
 
 export default function PressPage() {
-  // Type-safe horizontal/vertical orientation
+  // Force TypeScript to recognize only "horizontal" | "vertical"
   const tabOrientation = useBreakpointValue<"horizontal" | "vertical">({
     base: "horizontal",
     md: "vertical",
@@ -29,20 +26,30 @@ export default function PressPage() {
         Press Kit
       </Heading>
 
-      <Tabs
+      <Tabs.Root
         orientation={tabOrientation}
+        defaultValue="bio"
         colorScheme="purple"
-        variant="enclosed" // Chakra-supported
+        // @ts-expect-error Chakra does not yet type "soft-rounded"
+        variant="soft-rounded"
       >
         <Flex direction={{ base: "column", md: "row" }} gap={6}>
           {/* Tab List */}
           <Box minW={{ md: "220px" }} flexShrink={0}>
-            <TabList flexDirection={{ base: "row", md: "column" }}>
-              <Tab _hover={{ boxShadow: "sm" }}>Bio</Tab>
-              <Tab _hover={{ boxShadow: "sm" }}>Video</Tab>
-              <Tab _hover={{ boxShadow: "sm" }}>Audio</Tab>
-              <Tab _hover={{ boxShadow: "sm" }}>Photos</Tab>
-            </TabList>
+            <Tabs.List>
+              <Tabs.Trigger _hover={{ boxShadow: "sm" }} value="bio">
+                Bio
+              </Tabs.Trigger>
+              <Tabs.Trigger _hover={{ boxShadow: "sm" }} value="video">
+                Video
+              </Tabs.Trigger>
+              <Tabs.Trigger _hover={{ boxShadow: "sm" }} value="audio">
+                Audio
+              </Tabs.Trigger>
+              <Tabs.Trigger _hover={{ boxShadow: "sm" }} value="photos">
+                Photos
+              </Tabs.Trigger>
+            </Tabs.List>
           </Box>
 
           {/* Tab Panels */}
@@ -54,21 +61,23 @@ export default function PressPage() {
             p={6}
             boxShadow="sm"
           >
-            <TabPanel>
-              <Bio />
-            </TabPanel>
-            <TabPanel>
-              <VideoArchive />
-            </TabPanel>
-            <TabPanel>
-              <AudioArchive />
-            </TabPanel>
-            <TabPanel>
-              <PhotoGallery />
-            </TabPanel>
+            <Box w="100%" p={{ base: 0, md: 6 }}>
+              <Tabs.Content value="bio">
+                <Bio />
+              </Tabs.Content>
+              <Tabs.Content value="video">
+                <VideoArchive />
+              </Tabs.Content>
+              <Tabs.Content value="audio">
+                <AudioArchive />
+              </Tabs.Content>
+              <Tabs.Content value="photos">
+                <PhotoGallery />
+              </Tabs.Content>
+            </Box>
           </Box>
         </Flex>
-      </Tabs>
+      </Tabs.Root>
     </Container>
   );
 }
