@@ -12,10 +12,17 @@ const METAMASK_DOWNLOAD = "https://metamask.io/download.html";
 const CONTRACT_ADDRESS = "0xa5E820bFf4C729CF6e411C460c5D2F5855192D68";
 const CONTRACT_ABI = contractJson.abi;
 
-// Declare Ethereum provider on window
+// Define Ethereum provider for ethers v6
+interface EthereumProvider {
+  isMetaMask?: boolean;
+  request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
+  on?: (event: string, handler: (...args: any[]) => void) => void;
+  removeListener?: (event: string, handler: (...args: any[]) => void) => void;
+}
+
 declare global {
   interface Window {
-    ethereum?: ethers.ExternalProvider;
+    ethereum?: EthereumProvider;
   }
 }
 
