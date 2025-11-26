@@ -1,23 +1,13 @@
+// helpers/web3.ts
 import { ethers } from "ethers";
-
-// Narrowed Ethereum provider type
-interface EthereumProvider {
-  isMetaMask?: boolean;
-  request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
-}
-
-declare global {
-  interface Window {
-    ethereum?: EthereumProvider;
-  }
-}
+import { EthereumProvider } from "@/types/ethereum";
 
 /**
  * Get an ethers provider from MetaMask
  */
 export function getProvider(): ethers.BrowserProvider | null {
   if (typeof window !== "undefined" && window.ethereum) {
-    return new ethers.BrowserProvider(window.ethereum);
+    return new ethers.BrowserProvider(window.ethereum as EthereumProvider);
   }
   return null;
 }

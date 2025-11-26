@@ -1,36 +1,44 @@
 "use client";
 
-import { useState, ChangeEvent, FC } from "react";
+import { useState, ChangeEvent, FC, useEffect } from "react";
 import { Box, Button, Flex, Text, Input } from "@chakra-ui/react";
 import { toaster } from "@/components/ui/toaster";
 import { ethers } from "ethers";
+import { EthereumProvider } from "@/types/ethereum";
 import contractJson from "../../artifacts/contracts/BoLilly.sol/BoLilly.json" assert { type: "json" };
 
 const METAMASK_DOWNLOAD = "https://metamask.io/download.html";
-
-// Replace with deployed values
 const CONTRACT_ADDRESS = "0xa5E820bFf4C729CF6e411C460c5D2F5855192D68";
 const CONTRACT_ABI = contractJson.abi;
 
-// Define Ethereum provider for ethers v6
-interface EthereumProvider {
-  isMetaMask?: boolean;
-  request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
-  on?: (event: string, handler: (...args: unknown[]) => void) => void;
-  removeListener?: (event: string, handler: (...args: unknown[]) => void) => void;
-}
-
-declare global {
-  interface Window {
-    ethereum?: EthereumProvider;
-  }
-}
-
 const ConnectWalletPrompt: FC = () => {
-  const [hasMetaMask] = useState<boolean>(typeof window !== "undefined" && !!window.ethereum);
+  const [hasMetaMask, setHasMetaMask] = useState(false);
   const [account, setAccount] = useState<string | null>(null);
-  const [connecting, setConnecting] = useState<boolean>(false);
+  const [network, setNetwork] = useState<string | null>(null);
+  const [connecting, setConnecting] = useState(false);
   const [file, setFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    setHasMetaMask(typeof window !== "undefined" && !!window.ethereum);
+
+    const ethereum = window.ethereum as EthereumProvider | undefined;
+    if (!ethereum || !ethereum.on) return;
+
+    const handleChainChanged = async () => {
+      try {
+        const provider = new ethers.BrowserProvider(ethereum);
+        const network = await provider.getNetwork();
+        setNetwork(network.name);
+      } catch {}
+    };
+
+    handleChainChanged();
+    ethereum.on("chainChanged", handleChainChanged);
+
+    return () => {
+      ethereum.removeListener?.("chainChanged", handleChainChanged);
+    };
+  }, []);
 
   const handleConnect = async () => {
     if (!hasMetaMask) {
@@ -40,7 +48,7 @@ const ConnectWalletPrompt: FC = () => {
 
     try {
       setConnecting(true);
-      const ethereum = window.ethereum!;
+      const ethereum = window.ethereum as EthereumProvider;
       const provider = new ethers.BrowserProvider(ethereum);
       const accounts = (await provider.send("eth_requestAccounts", [])) as string[];
 
@@ -52,12 +60,9 @@ const ConnectWalletPrompt: FC = () => {
           type: "success",
           duration: 5000,
         });
-      } else {
-        throw new Error("No accounts returned");
       }
     } catch (err) {
       console.error("Wallet connection failed:", err);
-      setAccount(null);
       toaster.create({
         title: "Connection Failed",
         description: "Could not connect to MetaMask",
@@ -74,113 +79,50 @@ const ConnectWalletPrompt: FC = () => {
   };
 
   const handleMint = async () => {
-    if (!account) {
-      toaster.create({
-        title: "Wallet Not Connected",
-        description: "Please connect your wallet first",
-        type: "warning",
-        duration: 5000,
-      });
-      return;
-    }
-
-    if (!file) {
-      toaster.create({
-        title: "No File Selected",
-        description: "Please select an image file",
-        type: "warning",
-        duration: 5000,
-      });
-      return;
-    }
+    if (!account || !file) return;
 
     try {
-      // 1️⃣ Upload image + metadata via Next.js API
       const formData = new FormData();
       formData.append("file", file);
       formData.append(
         "metadata",
-        JSON.stringify({
-          name: "Student NFT",
-          description: "Minted via ConnectWalletPrompt",
-        })
+        JSON.stringify({ name: "Student NFT", description: "Minted via ConnectWalletPrompt" })
       );
 
-      const uploadRes = await fetch("/api/pinata", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!uploadRes.ok) throw new Error("Failed to upload to Pinata API");
+      const uploadRes = await fetch("/api/pinata", { method: "POST", body: formData });
+      if (!uploadRes.ok) throw new Error("Pinata upload failed");
       const { metadataUri } = (await uploadRes.json()) as { metadataUri: string };
 
-      // 2️⃣ Mint NFT
-      const ethereum = window.ethereum!;
+      const ethereum = window.ethereum as EthereumProvider;
       const provider = new ethers.BrowserProvider(ethereum);
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
 
       const tx = await contract.mintStudent(metadataUri, { gasLimit: 500_000 });
-
-      toaster.create({
-        title: "Minting...",
-        description: `Transaction submitted: ${tx.hash}`,
-        type: "info",
-        duration: 5000,
-      });
-
+      toaster.create({ title: "Minting...", description: `Tx submitted: ${tx.hash}`, type: "info", duration: 5000 });
       await tx.wait();
-
-      toaster.create({
-        title: "Mint Successful",
-        description: `Tx confirmed: ${tx.hash}`,
-        type: "success",
-        duration: 5000,
-      });
+      toaster.create({ title: "Mint Successful", description: `Tx confirmed: ${tx.hash}`, type: "success", duration: 5000 });
     } catch (err) {
       console.error("Mint failed:", err);
-      toaster.create({
-        title: "Mint Failed",
-        description: "Could not complete transaction",
-        type: "error",
-        duration: 5000,
-      });
+      toaster.create({ title: "Mint Failed", description: "Could not complete transaction", type: "error", duration: 5000 });
     }
   };
 
   return (
-    <Flex
-      as="footer"
-      width="100%"
-      p={4}
-      bg="gray.100"
-      align="center"
-      justify="center"
-      mt={4}
-      position="sticky"
-      bottom={0}
-    >
+    <Flex as="footer" width="100%" p={4} bg="gray.100" align="center" justify="center" mt={4} position="sticky" bottom={0}>
       <Box textAlign="center">
-        {!hasMetaMask && (
-          <Text mb={2} fontSize="lg">
-            To interact with this feature, please install MetaMask.
-          </Text>
-        )}
-
+        {!hasMetaMask && <Text mb={2} fontSize="lg">Install MetaMask to use this feature.</Text>}
         {account ? (
-          <Flex gap={4} justify="center" align="center" direction="column">
+          <Flex gap={4} direction="column" align="center">
             <Input type="file" accept="image/*" onChange={handleFileChange} />
             <Button onClick={handleMint}>Mint NFT</Button>
           </Flex>
         ) : (
-          <Button
-            colorScheme="orange"
-            onClick={handleConnect}
-            loading={connecting}
-          >
+          <Button colorScheme="orange" onClick={handleConnect} loading={connecting}>
             {hasMetaMask ? "Connect Wallet" : "Get MetaMask"}
           </Button>
         )}
+        {network && <Text mt={2}>Connected Network: {network}</Text>}
       </Box>
     </Flex>
   );
