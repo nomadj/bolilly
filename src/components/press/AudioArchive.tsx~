@@ -1,0 +1,49 @@
+"use client";
+
+import { Box, Heading, VStack, Text } from "@chakra-ui/react";
+
+export default function AudioArchive() {
+  return (
+    <Box>
+      <Heading size="lg" mb={4}>
+        Audio Archive
+      </Heading>
+
+      <VStack spacing={3} align="stretch">
+        <Box
+          p={3}
+          borderRadius="md"
+          bg="gray.50"
+          _dark={{ bg: "gray.700" }}
+          boxShadow="sm"
+        >
+          <Text fontWeight="semibold">Lovers Quarrel</Text>
+          <Text fontSize="sm" color="gray.600" _dark={{ color: "gray.300" }}>
+          To Wear This Crown
+          </Text>
+          <audio controls style={{ width: "100%", marginTop: "8px" }}>
+            <source src="/media/twtc.mp3" type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
+        </Box>
+
+        <Box
+          p={3}
+          borderRadius="md"
+          bg="gray.50"
+          _dark={{ bg: "gray.700" }}
+          boxShadow="sm"
+        >
+          <Text fontWeight="semibold">Lovers Quarrel</Text>
+          <Text fontSize="sm" color="gray.600" _dark={{ color: "gray.300" }}>
+            She Majored in Moonlight
+          </Text>
+          <audio controls style={{ width: "100%", marginTop: "8px" }}>
+            <source src="/media/smim.mp3" type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
+        </Box>
+      </VStack>
+    </Box>
+  );
+}

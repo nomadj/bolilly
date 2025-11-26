@@ -1,0 +1,28 @@
+"use client";
+
+import { Box, Heading, SimpleGrid, Image } from "@chakra-ui/react";
+
+export default function PhotoGallery() {
+  const photos = [
+    "/press/photo1.jpg",
+    "/press/photo2.jpg",
+    "/press/photo3.jpg",
+    "/press/photo4.jpg",
+  ];
+
+  return (
+    <Box>
+      <Heading size="lg" mb={4}>
+        Photo Gallery
+      </Heading>
+
+      <SimpleGrid columns={{ base: 2, md: 4 }} spacing={3}>
+        {photos.map((src) => (
+          <Box key={src} borderRadius="md" overflow="hidden" boxShadow="sm">
+            <Image src={src} alt="Press photo" width="100%" height="100%" objectFit="cover" />
+          </Box>
+        ))}
+      </SimpleGrid>
+    </Box>
+  );
+}

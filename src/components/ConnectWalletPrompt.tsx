@@ -2,16 +2,21 @@
 
 import { useState } from "react";
 import { FC } from "react";
-import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Text, Input } from "@chakra-ui/react";
 import { toaster } from "@/components/ui/toaster";
+import { ethers } from "ethers";
+import contractJson from "../../artifacts/contracts/BoLilly.sol/BoLilly.json" assert { type: "json" };
 
 const METAMASK_DOWNLOAD = "https://metamask.io/download.html";
+
+// Replace with deployed values
+const CONTRACT_ADDRESS = "0xa5E820bFf4C729CF6e411C460c5D2F5855192D68";
+const CONTRACT_ABI = contractJson.abi;
 
 interface EthereumProvider {
   isMetaMask?: boolean;
   request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
 }
-
 interface EthereumWindow extends Window {
   ethereum?: EthereumProvider;
 }
@@ -22,6 +27,7 @@ const ConnectWalletPrompt: FC = () => {
   );
   const [account, setAccount] = useState<string | null>(null);
   const [connecting, setConnecting] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
 
   const handleClick = async () => {
     if (!hasMetaMask) {
@@ -38,7 +44,7 @@ const ConnectWalletPrompt: FC = () => {
         method: "eth_requestAccounts",
       })) as string[];
 
-      if (accounts && accounts.length > 0) {
+      if (accounts?.length > 0) {
         const connected = accounts[0];
         setAccount(connected);
         toaster.create({
@@ -62,14 +68,64 @@ const ConnectWalletPrompt: FC = () => {
     } finally {
       setConnecting(false);
     }
+
   };
 
-  const handleThumbsUp = () => {
-    console.log("👍 user clicked thumbs up");
-  };
+  const handleMint = async () => {
+    try {
+      if (!account) throw new Error("No wallet connected");
+      if (!file) throw new Error("No image file selected");
 
-  const handleThumbsDown = () => {
-    console.log("👎 user clicked thumbs down");
+      // 1️⃣ Upload image + metadata via Next.js API (server-side handles Pinata keys)
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append(
+        "metadata",
+        JSON.stringify({
+          name: "Student NFT",
+          description: "Minted via ConnectWalletPrompt",
+        })
+      );
+
+      const uploadRes = await fetch("/api/pinata", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!uploadRes.ok) throw new Error("Failed to upload to Pinata API");
+      const { metadataUri } = await uploadRes.json();
+
+      // 2️⃣ Mint NFT using ethers
+      const provider = new ethers.BrowserProvider(
+        (window as EthereumWindow).ethereum as any
+      );
+      const signer = await provider.getSigner();
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+
+      const tx = await contract.mintStudent(metadataUri, { gasLimit: 500000 });
+      toaster.create({
+        title: "Minting...",
+        description: `Transaction submitted: ${tx.hash}`,
+        type: "info",
+        duration: 5000,
+      });
+
+      await tx.wait();
+      toaster.create({
+        title: "Mint Successful",
+        description: `Tx confirmed: ${tx.hash}`,
+        type: "success",
+        duration: 5000,
+      });
+    } catch (err) {
+      console.error("Mint failed:", err);
+      toaster.create({
+        title: "Mint Failed",
+        description: "Could not complete transaction",
+        type: "error",
+        duration: 5000,
+      });
+    }
   };
 
   return (
@@ -92,15 +148,19 @@ const ConnectWalletPrompt: FC = () => {
         )}
 
         {account ? (
-          <Flex gap={4} justify="center">
-            <Button onClick={handleThumbsUp}>👍</Button>
-            <Button onClick={handleThumbsDown}>👎</Button>
+          <Flex gap={4} justify="center" align="center" direction="column">
+            <Input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setFile(e.target.files?.[0] || null)}
+            />
+            <Button onClick={handleMint}>Mint NFT</Button>
           </Flex>
         ) : (
           <Button
             colorScheme="orange"
             onClick={handleClick}
-            loading={connecting}
+            isLoading={connecting}
           >
             {hasMetaMask ? "Connect Wallet" : "Get MetaMask"}
           </Button>

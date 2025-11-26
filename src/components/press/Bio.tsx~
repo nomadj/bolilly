@@ -1,0 +1,20 @@
+"use client";
+
+import { Box, Heading, Text } from "@chakra-ui/react";
+
+export default function Bio() {
+  return (
+    <Box>
+      <Heading size="lg" mb={3}>
+        About BoLilly
+      </Heading>
+      <Text fontSize="md" mb={3}>
+        [Placeholder bio — replace with a polished artist biography. Keep this section ~3–6 paragraphs,
+        highlighting background, notable performances, and contact/booking info.]
+      </Text>
+      <Text fontSize="sm" color="gray.600" _dark={{ color: "gray.300" }}>
+        For booking inquiries: <strong>booking@yourdomain.com</strong>
+      </Text>
+    </Box>
+  );
+}

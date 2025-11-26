@@ -1,0 +1,39 @@
+import { NextResponse } from "next/server";
+import formidable from "formidable";
+import fs from "fs";
+import { pinImageToPinata } from "@/helpers/imagePinner";
+import { pinMetadataToPinata } from "@/helpers/pinataPinner";
+
+export const config = {
+  api: {
+    bodyParser: false, // ❌ not used in app router, only in pages/api
+  },
+};
+
+// Helper to parse FormData with formidable
+const parseForm = (req: Request): Promise<{ fields: any; files: any }> => {
+  return new Promise((resolve, reject) => {
+    const form = formidable();
+    form.parse(req as any, (err, fields, files) => {
+      if (err) reject(err);
+      else resolve({ fields, files });
+    });
+  });
+};
+
+export async function POST(req: Request) {
+  try {
+    const { fields, files } = await parseForm(req);
+
+    const file = files.file as formidable.File;
+    const metadata = JSON.parse(fields.metadata as string);
+
+    const imageUri = await pinImageToPinata(file.filepath);
+    const metadataUri = await pinMetadataToPinata({ ...metadata, image: imageUri });
+
+    return NextResponse.json({ metadataUri });
+  } catch (e: any) {
+    console.error("Pinata upload failed", e);
+    return NextResponse.json({ error: "Pinata upload failed" }, { status: 500 });
+  }
+}

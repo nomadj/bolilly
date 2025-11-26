@@ -1,0 +1,36 @@
+// components/NavDropdown.tsx
+"use client";
+
+import Link from "next/link";
+import {
+  Button,
+  Menu,
+  Portal,
+} from "@chakra-ui/react";
+
+export default function NavDropdown() {
+  return (
+    <Menu.Root>
+      <Menu.Trigger asChild>
+      <Button variant="ghost" fontSize="5xl" _hover={{ boxShadow: "none" }} _focus={{ boxShadow: "none" }}  >
+          ☰
+        </Button>
+      </Menu.Trigger>
+      <Portal>
+        <Menu.Positioner>
+          <Menu.Content>
+            <Menu.Item asChild _hover={{ boxShadow: "md", cursor: "pointer" }} >
+              <Link href="/press">Press Kit</Link>
+            </Menu.Item>
+            <Menu.Item asChild _hover={{ boxShadow: "md", cursor: "pointer" }} >
+              <Link href="/archives">Archives</Link>
+            </Menu.Item>
+            <Menu.Item asChild _hover={{ boxShadow: "md", cursor: "pointer" }} >
+              <Link href="/tickets">Tickets</Link>
+            </Menu.Item>
+          </Menu.Content>
+        </Menu.Positioner>
+      </Portal>
+    </Menu.Root>
+  );
+}
