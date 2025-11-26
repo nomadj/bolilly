@@ -7,6 +7,10 @@ import {
   Container,
   useBreakpointValue,
   Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
 } from "@chakra-ui/react";
 import Bio from "@/components/press/Bio";
 import VideoArchive from "@/components/press/VideoArchive";
@@ -14,7 +18,7 @@ import AudioArchive from "@/components/press/AudioArchive";
 import PhotoGallery from "@/components/press/PhotoGallery";
 
 export default function PressPage() {
-  // Narrow the type explicitly
+  // Chakra Tabs only supports "horizontal" or "vertical"
   const tabOrientation = useBreakpointValue<"horizontal" | "vertical">({
     base: "horizontal",
     md: "vertical",
@@ -26,29 +30,20 @@ export default function PressPage() {
         Press Kit
       </Heading>
 
-      <Tabs.Root
-        orientation={tabOrientation} // now type-safe
-        defaultValue="bio"
+      <Tabs
+        orientation={tabOrientation}
         colorScheme="purple"
-        variant="soft-rounded"
+        variant="enclosed" // ✅ Chakra-compatible
       >
         <Flex direction={{ base: "column", md: "row" }} gap={6}>
           {/* Tab List */}
           <Box minW={{ md: "220px" }} flexShrink={0}>
-            <Tabs.List>
-              <Tabs.Trigger _hover={{ boxShadow: "sm" }} value="bio">
-                Bio
-              </Tabs.Trigger>
-              <Tabs.Trigger _hover={{ boxShadow: "sm" }} value="video">
-                Video
-              </Tabs.Trigger>
-              <Tabs.Trigger _hover={{ boxShadow: "sm" }} value="audio">
-                Audio
-              </Tabs.Trigger>
-              <Tabs.Trigger _hover={{ boxShadow: "sm" }} value="photos">
-                Photos
-              </Tabs.Trigger>
-            </Tabs.List>
+            <TabList flexDirection={{ base: "row", md: "column" }}>
+              <Tab>Bio</Tab>
+              <Tab>Video</Tab>
+              <Tab>Audio</Tab>
+              <Tab>Photos</Tab>
+            </TabList>
           </Box>
 
           {/* Tab Panels */}
@@ -60,23 +55,23 @@ export default function PressPage() {
             p={6}
             boxShadow="sm"
           >
-            <Box w="100%" p={{ base: 0, md: 6 }}>
-              <Tabs.Content value="bio">
+            <TabPanels>
+              <TabPanel>
                 <Bio />
-              </Tabs.Content>
-              <Tabs.Content value="video">
+              </TabPanel>
+              <TabPanel>
                 <VideoArchive />
-              </Tabs.Content>
-              <Tabs.Content value="audio">
+              </TabPanel>
+              <TabPanel>
                 <AudioArchive />
-              </Tabs.Content>
-              <Tabs.Content value="photos">
+              </TabPanel>
+              <TabPanel>
                 <PhotoGallery />
-              </Tabs.Content>
-            </Box>
+              </TabPanel>
+            </TabPanels>
           </Box>
         </Flex>
-      </Tabs.Root>
+      </Tabs>
     </Container>
   );
 }
