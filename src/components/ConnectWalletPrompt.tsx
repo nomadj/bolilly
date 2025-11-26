@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, ChangeEvent } from "react";
-import { FC } from "react";
+import { useState, ChangeEvent, FC } from "react";
 import { Box, Button, Flex, Text, Input } from "@chakra-ui/react";
 import { toaster } from "@/components/ui/toaster";
 import { ethers } from "ethers";
@@ -13,19 +12,15 @@ const METAMASK_DOWNLOAD = "https://metamask.io/download.html";
 const CONTRACT_ADDRESS = "0xa5E820bFf4C729CF6e411C460c5D2F5855192D68";
 const CONTRACT_ABI = contractJson.abi;
 
-// Type-safe provider
-interface EthereumProvider extends ethers.ExternalProvider {}
-
+// Declare Ethereum provider on window
 declare global {
   interface Window {
-    ethereum?: EthereumProvider;
+    ethereum?: ethers.ExternalProvider;
   }
 }
 
 const ConnectWalletPrompt: FC = () => {
-  const [hasMetaMask] = useState<boolean>(
-    typeof window !== "undefined" && !!window.ethereum
-  );
+  const [hasMetaMask] = useState<boolean>(typeof window !== "undefined" && !!window.ethereum);
   const [account, setAccount] = useState<string | null>(null);
   const [connecting, setConnecting] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
