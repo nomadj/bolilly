@@ -9,7 +9,6 @@ import {
   Tabs,
   TabList,
   Tab,
-  TabPanels,
   TabPanel,
 } from "@chakra-ui/react";
 import Bio from "@/components/press/Bio";
@@ -18,7 +17,7 @@ import AudioArchive from "@/components/press/AudioArchive";
 import PhotoGallery from "@/components/press/PhotoGallery";
 
 export default function PressPage() {
-  // Chakra Tabs only supports "horizontal" or "vertical"
+  // Type-safe horizontal/vertical orientation
   const tabOrientation = useBreakpointValue<"horizontal" | "vertical">({
     base: "horizontal",
     md: "vertical",
@@ -33,16 +32,16 @@ export default function PressPage() {
       <Tabs
         orientation={tabOrientation}
         colorScheme="purple"
-        variant="enclosed" // ✅ Chakra-compatible
+        variant="enclosed" // Chakra-supported
       >
         <Flex direction={{ base: "column", md: "row" }} gap={6}>
           {/* Tab List */}
           <Box minW={{ md: "220px" }} flexShrink={0}>
             <TabList flexDirection={{ base: "row", md: "column" }}>
-              <Tab>Bio</Tab>
-              <Tab>Video</Tab>
-              <Tab>Audio</Tab>
-              <Tab>Photos</Tab>
+              <Tab _hover={{ boxShadow: "sm" }}>Bio</Tab>
+              <Tab _hover={{ boxShadow: "sm" }}>Video</Tab>
+              <Tab _hover={{ boxShadow: "sm" }}>Audio</Tab>
+              <Tab _hover={{ boxShadow: "sm" }}>Photos</Tab>
             </TabList>
           </Box>
 
@@ -55,20 +54,18 @@ export default function PressPage() {
             p={6}
             boxShadow="sm"
           >
-            <TabPanels>
-              <TabPanel>
-                <Bio />
-              </TabPanel>
-              <TabPanel>
-                <VideoArchive />
-              </TabPanel>
-              <TabPanel>
-                <AudioArchive />
-              </TabPanel>
-              <TabPanel>
-                <PhotoGallery />
-              </TabPanel>
-            </TabPanels>
+            <TabPanel>
+              <Bio />
+            </TabPanel>
+            <TabPanel>
+              <VideoArchive />
+            </TabPanel>
+            <TabPanel>
+              <AudioArchive />
+            </TabPanel>
+            <TabPanel>
+              <PhotoGallery />
+            </TabPanel>
           </Box>
         </Flex>
       </Tabs>
