@@ -14,21 +14,20 @@ import AudioArchive from "@/components/press/AudioArchive";
 import PhotoGallery from "@/components/press/PhotoGallery";
 
 export default function PressPage() {
-  const tabOrientation = useBreakpointValue({
+  // Narrow the type explicitly
+  const tabOrientation = useBreakpointValue<"horizontal" | "vertical">({
     base: "horizontal",
     md: "vertical",
   });
 
   return (
     <Container maxW="container.lg" py={8}>
-    
-
       <Heading mb={6} size="2xl">
         Press Kit
       </Heading>
 
       <Tabs.Root
-        orientation={tabOrientation}
+        orientation={tabOrientation} // now type-safe
         defaultValue="bio"
         colorScheme="purple"
         variant="soft-rounded"
@@ -37,10 +36,18 @@ export default function PressPage() {
           {/* Tab List */}
           <Box minW={{ md: "220px" }} flexShrink={0}>
             <Tabs.List>
-              <Tabs.Trigger _hover={{ boxShadow: "sm" }} value="bio">Bio</Tabs.Trigger>
-              <Tabs.Trigger _hover={{ boxShadow: "sm" }} value="video">Video</Tabs.Trigger>
-              <Tabs.Trigger _hover={{ boxShadow: "sm" }} value="audio">Audio</Tabs.Trigger>
-              <Tabs.Trigger _hover={{ boxShadow: "sm" }} value="photos">Photos</Tabs.Trigger>
+              <Tabs.Trigger _hover={{ boxShadow: "sm" }} value="bio">
+                Bio
+              </Tabs.Trigger>
+              <Tabs.Trigger _hover={{ boxShadow: "sm" }} value="video">
+                Video
+              </Tabs.Trigger>
+              <Tabs.Trigger _hover={{ boxShadow: "sm" }} value="audio">
+                Audio
+              </Tabs.Trigger>
+              <Tabs.Trigger _hover={{ boxShadow: "sm" }} value="photos">
+                Photos
+              </Tabs.Trigger>
             </Tabs.List>
           </Box>
 
@@ -52,24 +59,21 @@ export default function PressPage() {
             borderRadius="lg"
             p={6}
             boxShadow="sm"
-            // w="100vw"
-            // ml="-50%"
-            // transform="translateX(50%)"
-           >
+          >
             <Box w="100%" p={{ base: 0, md: 6 }}>
-            <Tabs.Content value="bio">
-              <Bio />
-            </Tabs.Content>
-            <Tabs.Content value="video">
-              <VideoArchive />
-            </Tabs.Content>
-            <Tabs.Content value="audio">
-              <AudioArchive />
-            </Tabs.Content>
-            <Tabs.Content value="photos">
-              <PhotoGallery />
-            </Tabs.Content>
-          </Box>
+              <Tabs.Content value="bio">
+                <Bio />
+              </Tabs.Content>
+              <Tabs.Content value="video">
+                <VideoArchive />
+              </Tabs.Content>
+              <Tabs.Content value="audio">
+                <AudioArchive />
+              </Tabs.Content>
+              <Tabs.Content value="photos">
+                <PhotoGallery />
+              </Tabs.Content>
+            </Box>
           </Box>
         </Flex>
       </Tabs.Root>
