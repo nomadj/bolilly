@@ -9,6 +9,7 @@ import contractJson from "../../artifacts/contracts/BoLilly.sol/BoLilly.json" as
 
 const METAMASK_DOWNLOAD = "https://metamask.io/download.html";
 const CONTRACT_ADDRESS = "0xa5E820bFf4C729CF6e411C460c5D2F5855192D68";
+// const CONTRACT_ADDRESS = "0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D" // Bored Ape
 const CONTRACT_ABI = contractJson.abi;
 
 const ConnectWalletPrompt: FC = () => {

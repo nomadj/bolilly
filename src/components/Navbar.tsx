@@ -26,7 +26,7 @@ const Navbar: FC<NavbarProps> = ({ onConnectWallet }) => {
       boxShadow="sm"
       >
       <VStack align="start" gap={0} pr={4}>
-        <Link href="/" passHref>
+        <Link href="/">
           <Heading size="5xl" color="black">
             BoLilly Live
           </Heading>
