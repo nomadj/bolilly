@@ -25,7 +25,7 @@ export default function VideoArchive() {
         Video Archive
       </Heading>
 
-      <VStack spacing={8} align="stretch" >
+      <VStack gap={4} align="stretch" >
         {samples.map((v) => (
           <Box
 	    w="100%"
