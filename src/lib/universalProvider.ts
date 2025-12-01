@@ -1,13 +1,19 @@
 // helpers/web3.ts
 import { ethers } from "ethers";
-import { EthereumProvider } from "@/types/ethereum";
+
+/**
+ * Type for MetaMask / Ethereum provider
+ */
+type EthereumProvider = import("ethers").providers.ExternalProvider & {
+  isMetaMask?: boolean;
+};
 
 /**
  * Get an ethers provider from MetaMask (BrowserProvider in v6)
  */
 export function getProvider(): ethers.BrowserProvider | null {
-  if (typeof window !== "undefined" && window.ethereum) {
-    return new ethers.BrowserProvider(window.ethereum as EthereumProvider);
+  if (typeof window !== "undefined" && (window as any).ethereum) {
+    return new ethers.BrowserProvider((window as any).ethereum as EthereumProvider);
   }
   return null;
 }
