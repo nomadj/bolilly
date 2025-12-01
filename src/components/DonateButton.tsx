@@ -34,6 +34,7 @@ export default function DonateButton() {
   const [native, setNative] = useState("ETH");
   const [success, setSuccess] = useState(false);
 
+  // Detect network on mount and on chain change
   useEffect(() => {
     const ethereum = (window as EthereumWindow).ethereum;
     if (!ethereum) return;
@@ -51,6 +52,11 @@ export default function DonateButton() {
       ethereum.removeListener("chainChanged", detectChain);
     };
   }, []);
+
+  const disconnectWallet = () => {
+    setAccount(null);
+    setSuccess(false);
+  };
 
   const connectWallet = async (): Promise<ethers.JsonRpcSigner | null> => {
     try {
@@ -70,6 +76,19 @@ export default function DonateButton() {
     } catch (err) {
       console.error("Wallet connection failed:", err);
       return null;
+    }
+  };
+
+  const handleFocus = async () => {
+    disconnectWallet();
+    const signer = await connectWallet();
+
+    // Update native currency after connecting wallet
+    const ethereum = (window as EthereumWindow).ethereum;
+    if (ethereum) {
+      const provider = new ethers.BrowserProvider(ethereum);
+      const network = await provider.getNetwork();
+      setNative(CHAIN_NATIVE[Number(network.chainId)] || "ETH");
     }
   };
 
@@ -124,6 +143,7 @@ export default function DonateButton() {
         step="0.0001"
         value={amount}
         onChange={(e) => setAmount(e.target.value)}
+        onFocus={handleFocus} // disconnect + connect + update network
       />
       <Button
         loading={loading}
