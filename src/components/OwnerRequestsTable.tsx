@@ -22,7 +22,7 @@ export default function OwnerRequestsTable({ requests = [], approveStudent, deny
         toaster.create({ title: "Denied", description: `${addr} denied.` });
       }
     } catch (err: any) {
-      toaster.create({ title: "Error", description: err?.message || "Something went wrong", status: "error" });
+      toaster.create({ title: "Error", description: err?.message || "Something went wrong" });
     } finally {
       setLoadingAddresses(prev => ({ ...prev, [addr]: false }));
     }
