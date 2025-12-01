@@ -2,21 +2,12 @@
 import { ethers } from "ethers";
 
 /**
- * Type for MetaMask / Ethereum provider
- */
-type EthereumProvider = {
-  isMetaMask?: boolean;
-  request?: (...args: any[]) => Promise<any>;
-  on?: (...args: any[]) => void;
-  removeListener?: (...args: any[]) => void;
-};
-
-/**
  * Get an ethers provider from MetaMask (BrowserProvider in v6)
  */
 export function getProvider(): ethers.BrowserProvider | null {
   if (typeof window !== "undefined" && (window as any).ethereum) {
-    return new ethers.BrowserProvider((window as any).ethereum as EthereumProvider);
+    // Cast to any — MetaMask implements EIP-1193 but does not ship TS types
+    return new ethers.BrowserProvider((window as any).ethereum);
   }
   return null;
 }
@@ -40,14 +31,11 @@ export async function getSigner(): Promise<ethers.Signer | null> {
   const provider = getProvider();
   if (!provider) return null;
 
-  // ethers v6 pattern
   return await provider.getSigner();
 }
 
 /**
  * Create a contract instance
- * If signer is provided → write
- * If no signer → read
  */
 export function getContract(
   address: string,
@@ -62,4 +50,3 @@ export function getContract(
 
   return new ethers.Contract(address, abi, signerOrProvider);
 }
-
