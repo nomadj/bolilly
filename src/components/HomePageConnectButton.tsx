@@ -8,7 +8,7 @@ import { getProvider, getSigner, getContract } from "@/lib/universalProvider";
 import BoLillyArtifact from "../../artifacts/contracts/BoLilly.sol/BoLilly.json" assert { type: "json" };
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!;
 
-// --------------------------------------------------
+/// --------------------------------------------------
 // Contract read helpers
 // --------------------------------------------------
 
