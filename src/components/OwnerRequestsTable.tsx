@@ -31,7 +31,7 @@ export default function OwnerRequestsTable({ requests = [], approveStudent, deny
   return (
     <>
       <Table.Root
-        variant="simple"
+        variant="line"
         size="sm"
         style={{ margin: "0 auto", border: "1px solid gray", width: "max-content" }}
       >
