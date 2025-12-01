@@ -1,0 +1,24 @@
+import { SimpleGrid, Box, AspectRatio, Heading } from "@chakra-ui/react";
+
+// Example data — replace with your own video URLs
+const videos = [
+  { id: 1, url: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+  { id: 2, url: "https://www.youtube.com/embed/9bZkp7q19f0" },
+  { id: 3, url: "https://www.youtube.com/embed/oHg5SJYRHA0" },
+  { id: 4, url: "https://www.youtube.com/embed/tVj0ZTS4WF4" },
+];
+
+export default function ApolloPage() {
+  return (
+    <Box p={8} maxW="1200px" mx="auto">
+      <Heading mb={6}>Apollo Videos</Heading>
+      <SimpleGrid columns={[1, 2, 3]} spacing={6}>
+        {videos.map((vid) => (
+          <AspectRatio key={vid.id} ratio={16 / 9} borderRadius="xl" overflow="hidden">
+            <iframe src={vid.url} allowFullScreen />
+          </AspectRatio>
+        ))}
+      </SimpleGrid>
+    </Box>
+  );
+}

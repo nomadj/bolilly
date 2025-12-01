@@ -2,7 +2,7 @@
 
 import { Box, Heading, VStack, Text } from "@chakra-ui/react";
 
-const tracks = ["/media/twtc.mp3", "/media/smim.mp3", "blackOrpheus.mp3"];
+const tracks = ["/media/twtc.mp3", "/media/smim.mp3", "/media/blackOrpheus.mp3"];
 
 export default function AudioArchive() {
   return (

@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
-contract BoLilly is ERC721Enumerable, Ownable, ReentrancyGuard {
+contract StudentNFT is ERC721Enumerable, Ownable, ReentrancyGuard {
     uint256 private _nextTokenId = 1;
 
     /// @dev token URIs
@@ -15,10 +15,16 @@ contract BoLilly is ERC721Enumerable, Ownable, ReentrancyGuard {
     /// STUDENT REQUEST SYSTEM
     /// -----------------------------
 
+    /// @notice Users who have requested student approval
     mapping(address => bool) public hasRequested;
+
+    /// @notice Users whose request was approved by the owner
     mapping(address => bool) public isApprovedStudent;
+
+    /// @notice Users whose request was denied
     mapping(address => bool) public isDenied;
 
+    /// @notice List of all pending requests
     address[] public pendingRequests;
 
     event StudentRequested(address indexed user);
@@ -27,30 +33,26 @@ contract BoLilly is ERC721Enumerable, Ownable, ReentrancyGuard {
     event TokenMinted(address indexed to, uint256 tokenId);
     event TokenBurned(address indexed user, uint256 tokenId);
 
-    constructor() ERC721("BoLilly", "BOLY") Ownable(msg.sender) {}
+    constructor() ERC721("StudentNFT", "SNFT") Ownable(msg.sender) {}
 
     // ------------------------------------------------------------
     // INTERNAL HELPERS
     // ------------------------------------------------------------
 
+    /// @dev returns true if user already has a token
     function ownsToken(address user) public view returns (bool) {
         return balanceOf(user) > 0;
     }
 
-    // ------------------------------------------------------------
-    // REQUEST LOGIC
-    // ------------------------------------------------------------
+    /// ------------------------------------------------------------
+    /// REQUEST LOGIC
+    /// ------------------------------------------------------------
 
-    function requestToBecomeStudent() external payable nonReentrant {
+    /// @notice User requests to become a student
+    function requestToBecomeStudent() external {
         require(!hasRequested[msg.sender], "Already requested");
         require(!isApprovedStudent[msg.sender], "Already approved");
         require(!isDenied[msg.sender], "Request previously denied");
-
-        /// 🔹 require 1 MATIC to submit request
-        require(msg.value == 1 ether, "1 MATIC required");
-
-        /// 🔹 forward 1 MATIC to contract owner
-        payable(owner()).transfer(msg.value);
 
         hasRequested[msg.sender] = true;
         pendingRequests.push(msg.sender);
@@ -58,6 +60,7 @@ contract BoLilly is ERC721Enumerable, Ownable, ReentrancyGuard {
         emit StudentRequested(msg.sender);
     }
 
+    /// @notice Owner approves a pending student request
     function approveStudent(address user) external onlyOwner {
         require(hasRequested[user], "User never requested");
         require(!isApprovedStudent[user], "Already approved");
@@ -71,6 +74,7 @@ contract BoLilly is ERC721Enumerable, Ownable, ReentrancyGuard {
         emit StudentApproved(user);
     }
 
+    /// @notice Owner denies a pending student request
     function denyStudent(address user) external onlyOwner {
         require(hasRequested[user], "User never requested");
 
@@ -82,6 +86,7 @@ contract BoLilly is ERC721Enumerable, Ownable, ReentrancyGuard {
         emit StudentDenied(user);
     }
 
+    /// @dev remove user from pendingRequests efficiently
     function _removePending(address user) internal {
         uint256 len = pendingRequests.length;
         for (uint256 i = 0; i < len; i++) {
@@ -93,19 +98,14 @@ contract BoLilly is ERC721Enumerable, Ownable, ReentrancyGuard {
         }
     }
 
-    // ------------------------------------------------------------
-    // MINTING / BURNING
-    // ------------------------------------------------------------
+    /// ------------------------------------------------------------
+    /// MINTING / BURNING
+    /// ------------------------------------------------------------
 
-    function mint(string memory uri) external payable nonReentrant {
+    /// @notice Approved users may mint exactly ONE NFT
+    function mint(string memory uri) external nonReentrant {
         require(isApprovedStudent[msg.sender], "Not approved");
         require(!ownsToken(msg.sender), "Already owns token");
-
-        /// 🔹 require 4 MATIC for minting
-        require(msg.value == 4 ether, "4 MATIC required");
-
-        /// 🔹 forward all 4 MATIC to the owner
-        payable(owner()).transfer(msg.value);
 
         uint256 tokenId = _nextTokenId++;
         _safeMint(msg.sender, tokenId);
@@ -123,19 +123,18 @@ contract BoLilly is ERC721Enumerable, Ownable, ReentrancyGuard {
         emit TokenBurned(msg.sender, tokenId);
     }
 
-    // ------------------------------------------------------------
-    // TOKEN URI
-    // ------------------------------------------------------------
+    /// ------------------------------------------------------------
+    /// TOKEN URI
+    /// ------------------------------------------------------------
 
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
-        /// 🔹 replaced _exists(tokenId) with modern check
-        require(_ownerOf(tokenId) != address(0), "URI query for nonexistent token");
+        require(_exists(tokenId), "URI query for nonexistent token");
         return _tokenURIs[tokenId];
     }
 
-    // ------------------------------------------------------------
-    // VIEW HELPERS
-    // ------------------------------------------------------------
+    /// ------------------------------------------------------------
+    /// VIEW HELPERS
+    /// ------------------------------------------------------------
 
     function getPendingRequests() external view returns (address[] memory) {
         return pendingRequests;

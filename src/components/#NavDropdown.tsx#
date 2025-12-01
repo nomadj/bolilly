@@ -12,7 +12,8 @@ export default function NavDropdown() {
   return (
     <Menu.Root>
       <Menu.Trigger asChild>
-      <Button variant="ghost" fontSize="5xl" _hover={{ boxShadow: "none" }} _focus={{ boxShadow: "none" }}  >☰</Button>
+      <Button variant="ghost" fontSize="5xl" _hover={{ boxShadow: "none" }} _focus={{ boxShadow: "none" }}  >☰
+</Button>
     </Menu.Trigger>
       <Portal>
         <Menu.Positioner>
