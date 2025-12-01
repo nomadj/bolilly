@@ -88,6 +88,7 @@ export default function DonateButton() {
     if (ethereum) {
       const provider = new ethers.BrowserProvider(ethereum);
       const network = await provider.getNetwork();
+      console.log("Chain ID: ", network.chainId);
       setNative(CHAIN_NATIVE[Number(network.chainId)] || "ETH");
     }
   };
