@@ -1,4 +1,3 @@
-// helpers/web3.ts
 import { ethers } from "ethers";
 
 /**

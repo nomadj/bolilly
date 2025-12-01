@@ -41,7 +41,6 @@ export default function DonateButton() {
     const detectChain = async () => {
       const provider = new ethers.BrowserProvider(ethereum);
       const network = await provider.getNetwork();
-      console.log("I AM A MOOSE: ", network.chainId)
       setNative(CHAIN_NATIVE[Number(network.chainId)] || "ETH");
     };
 
