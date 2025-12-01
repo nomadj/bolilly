@@ -65,7 +65,6 @@ async function fetchPendingRequests(): Promise<string[]> {
     toaster.create({
       title: "Error Fetching Pending Requests",
       description: err?.message || "Something went wrong",
-      status: "error",
     });
     return [];
   }
