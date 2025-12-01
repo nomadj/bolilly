@@ -1,11 +1,14 @@
 // helpers/web3.ts
-import { ethers, ExternalProvider } from "ethers";
+import { ethers } from "ethers";
 
 /**
  * Type for MetaMask / Ethereum provider
  */
-type EthereumProvider = ExternalProvider & {
+type EthereumProvider = {
   isMetaMask?: boolean;
+  request?: (...args: any[]) => Promise<any>;
+  on?: (...args: any[]) => void;
+  removeListener?: (...args: any[]) => void;
 };
 
 /**
@@ -59,3 +62,4 @@ export function getContract(
 
   return new ethers.Contract(address, abi, signerOrProvider);
 }
+
