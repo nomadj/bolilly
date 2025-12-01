@@ -17,7 +17,7 @@ export default function ApolloPage() {
       <Heading ml={12} mb={6}>Student Apollo 🏹</Heading>
       <SimpleGrid
         columns={{ base: 1, sm: 2, md: 3 }}
-        spacing={8}
+        gap={6}
         justifyItems="center"
       >
         {videos.map((vid) => (
