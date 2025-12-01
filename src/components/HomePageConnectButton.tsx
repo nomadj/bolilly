@@ -157,7 +157,6 @@ export default function HomePageConnectButton() {
       toaster.create({
         title: "Transaction Failed",
         description: err?.message || "Something went wrong",
-        status: "error",
       });
     } finally {
       setLoading(false);
@@ -204,7 +203,6 @@ export default function HomePageConnectButton() {
       toaster.create({
         title: "Transaction Failed",
         description: err?.message || "Something went wrong",
-        status: "error",
       });
     } finally {
       setLoading(false);
