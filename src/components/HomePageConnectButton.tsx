@@ -129,7 +129,6 @@ export default function HomePageConnectButton() {
       toaster.create({
         title: "Error Connecting Wallet",
         description: err?.message || "Something went wrong",
-        status: "error",
       });
     } finally {
       setLoading(false);
