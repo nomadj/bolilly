@@ -1,10 +1,10 @@
 // helpers/web3.ts
-import { ethers } from "ethers";
+import { ethers, ExternalProvider } from "ethers";
 
 /**
  * Type for MetaMask / Ethereum provider
  */
-type EthereumProvider = import("ethers").providers.ExternalProvider & {
+type EthereumProvider = ExternalProvider & {
   isMetaMask?: boolean;
 };
 
