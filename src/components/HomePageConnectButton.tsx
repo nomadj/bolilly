@@ -244,6 +244,8 @@ export default function HomePageConnectButton() {
 	      requests={requests}
 	      approveStudent={async (addr: string) => {
 		const signer = await getSigner();
+		if (!signer) throw new Error("No signer available");
+
 		const contract = getContract(CONTRACT_ADDRESS, BoLillyArtifact.abi, signer);
 		const tx = await contract.approveStudent(addr);
 		await tx.wait();
@@ -254,6 +256,8 @@ export default function HomePageConnectButton() {
 	      }}
 	      denyStudent={async (addr: string) => {
 		const signer = await getSigner();
+		if (!signer) throw new Error("No signer available");
+
 		const contract = getContract(CONTRACT_ADDRESS, BoLillyArtifact.abi, signer);
 		const tx = await contract.denyStudent(addr);
 		await tx.wait();
@@ -263,6 +267,7 @@ export default function HomePageConnectButton() {
 		setRequests(updated);
 	      }}
 	    />
+
           )}
         </div>
         <Toaster />
