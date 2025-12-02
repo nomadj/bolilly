@@ -6,9 +6,9 @@ import ReactPlayer from "react-player";
 export default function ApolloPage() {
   const videos = [
     {
-      url: "https://youtu.be/GhTbVhofs0I?si=s20vaKGnmlfyfKW3",
-      title: "Apollo: The Far-Shooting God",
-      desc: "This is a placeholder video. Your personalized videos will appear here.",
+      url: "https://youtu.be/_H2hOm259Lo",
+      title: "Apollo 1",
+      desc: "1 to 5 bass movement with turnaround",
     },
   ];
 
