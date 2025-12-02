@@ -16,7 +16,7 @@ export default function ApolloPage() {
     <Box p={8}>
       <Heading ml={12} mb={6}>Student Apollo 🏹</Heading>
       <SimpleGrid
-	columns={{ base: 1, sm: 2, md: 3 }}
+	columns={{ base: 1, sm: 1, md: 3 }}
 	gap={6}
 	justifyItems="center"
       >
