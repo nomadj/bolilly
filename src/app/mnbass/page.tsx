@@ -34,7 +34,7 @@ export default function MnBassPage() {
 	      boxShadow: "lg",
 	    }}
 	  >
-	    {/* Responsive wrapper */}
+	    {/*Responsive wrapper*/}
 	    <Box position="relative" width="100%" paddingTop="56.25%" mb={3} borderRadius="lg" overflow="hidden">
 	      <ReactPlayer
 		src={vid.url}
