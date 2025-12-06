@@ -6,9 +6,9 @@ import ReactPlayer from "react-player";
 export default function MnBassPage() {
   const videos = [
     {
-      url: "https://youtu.be/ulxoIly3jt4?si=XMIsfXzi5C6-iSxi",
-      title: "0 Strings Bass Solo",
-      desc: "This is a placeholder. Check back here for your custom lesson content. Content is typically posted by EOD on your lesson day.",
+      url: "https://youtu.be/F78GGWZ0MLs",
+      title: "Lesson 1",
+      desc: "Proper stretching before playing, being conscuious of sympathetic vibration, and creating clean, articulate bass lines",
     },
   ];
 
