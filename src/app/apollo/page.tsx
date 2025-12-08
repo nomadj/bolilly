@@ -10,6 +10,11 @@ export default function ApolloPage() {
       title: "Apollo 1",
       desc: "1 to 5 bass movement with turnaround",
     },
+    {
+      url: "https://youtu.be/Hwb8fnnVkbc",
+      title: "Apollo 2",
+      desc: "Strict waltz rhythm",
+    },    
   ];
 
   return (
