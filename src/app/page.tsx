@@ -15,7 +15,7 @@ export default function Home() {
     <Stack direction="column" gap={4} p={6}>
       <Heading size="3xl" color="green" ml={12}>Next Live Stream TBA</Heading>
       <VideoGrid />
-      <HomePageConnectButton />
+
     </Stack>
   );
 }
