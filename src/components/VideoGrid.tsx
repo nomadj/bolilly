@@ -2,7 +2,8 @@ import { Box, SimpleGrid } from "@chakra-ui/react";
 import ReactPlayer from "react-player";
 
 const videos = [
-  { url: "https://livepeercdn.studio/hls/08c4bf68ag706hko/index.m3u8", title: "Daily Video", key: 3},
+  { url: "https://violet-terrible-goose-933.mypinata.cloud/ipfs/Qma94Efo5JkkZnAxRJkYho25zuh5LFm86eJFZvGM8vD9Cc", title: "Classical Guitar", key: 2},
+  { url: "https://livepeercdn.studio/hls/08c4bf68ag706hko/index.m3u8", title: "Live Stream", key: 3},
   // {url: "https://livepeercdn.studio/webrtc/08c4bf68ag706hko", title: "Daily Video", key: 4 }
 ];
 
