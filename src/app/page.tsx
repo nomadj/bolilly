@@ -13,7 +13,7 @@ import HomePageConnectButton from "@/components/HomePageConnectButton";
 export default function Home() {
   return (
     <Stack direction="column" gap={4} p={6}>
-      <Heading size="3xl" color="green" ml={12}>Next Live Stream TBA</Heading>
+      <Heading size="3xl" color="green" ml={12}>Refresh browser to join live stream</Heading>
       <VideoGrid />
 
     </Stack>
