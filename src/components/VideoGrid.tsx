@@ -27,13 +27,6 @@ export default function VideoGrid() {
               height="100%"
               style={{ position: "absolute", top: 0, left: 0 }}
               controls={true}
-	      config={{
-		file: {
-		  attributes: {
-		    controlsList: 'nodownload',
-		  }
-		}
-	      }}
             />
           </Box>
         ))}
