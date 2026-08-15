@@ -13,7 +13,8 @@ import HomePageConnectButton from "@/components/HomePageConnectButton";
 export default function Home() {
   return (
     <Stack direction="column" gap={4} p={6}>
-      <Heading size="3xl" color="green" ml={12}>Now featuring Josh Poretti\nVenmo @jporetti</Heading>
+      <Heading size="3xl" color="green" ml={12}>Josh Poretti</Heading>
+      <Heading size="xl" color="green" ml={12}>Venmo @jporetti</Heading>
       <VideoGrid />
 
     </Stack>
