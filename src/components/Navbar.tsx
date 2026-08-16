@@ -29,13 +29,15 @@ const Navbar: FC<NavbarProps> = ({ onConnectWallet }) => {
         <Box ml={10}>
 	  <Link href="/">
 	    <Heading size="5xl" color="black">
-	      BoLilly Live
+	      BoLilly
+            </Heading>
+      	    <Heading size="5xl" color="black">
+	      Live
 	    </Heading>
-	  
-	    <Text fontSize="3xl" color="black" pl={2}>
+          </Link>
+      <Text fontSize="3xl" color="black" pl={2}>
 	      ❤️
             </Text>
-          </Link>
 	</Box>
       </VStack>
       <Flex flex={1} justify="center" gap={1}>
