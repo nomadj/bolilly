@@ -1,6 +1,6 @@
 "use client"
 
-import { Heading, Stack } from "@chakra-ui/react";
+import { Box, Heading, Stack, Text } from "@chakra-ui/react";
 import VideoGrid from "@/components/VideoGrid";
 import HomePageConnectButton from "@/components/HomePageConnectButton";
 // import dynamic from "next/dynamic";
@@ -13,10 +13,11 @@ import HomePageConnectButton from "@/components/HomePageConnectButton";
 export default function Home() {
   return (
     <Stack direction="column" gap={4} p={6}>
-      <Heading size="3xl" color="green" ml={12}>Josh Poretti</Heading>
-      <Heading size="xl" color="green" ml={12}>Venmo @jporetti</Heading>
+      <Box ml={10}>
+        <Heading size="3xl" color="green">Local Talent, Live Streams</Heading>
+        <Text size="3xl" color="green">Next performer TBA</Text>
+      </Box>
       <VideoGrid />
-
     </Stack>
   );
 }

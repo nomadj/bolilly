@@ -1,7 +1,7 @@
 // src/components/Navbar.tsx
 "use client";
 import { FC } from "react";
-import { Link, Flex, Heading, VStack, Text } from "@chakra-ui/react";
+import { Box, Link, Flex, Heading, VStack, Text } from "@chakra-ui/react";
 import DonateButton from "@/components/DonateButton";
 import NavDropdown from "@/components/NavDropdown";
 
@@ -26,14 +26,17 @@ const Navbar: FC<NavbarProps> = ({ onConnectWallet }) => {
       boxShadow="sm"
       >
       <VStack align="start" gap={0} pr={4}>
-        <Link href="/">
-          <Heading size="5xl" color="black">
-            BoLilly Live
-          </Heading>
-        </Link>
-        <Text fontSize="3xl" color="black" pl={2}>
-          ❤️
-        </Text>
+        <Box ml={10}>
+	  <Link href="/">
+	    <Heading size="5xl" color="black">
+	      BoLilly Live
+	    </Heading>
+	  
+	    <Text fontSize="3xl" color="black" pl={2}>
+	      ❤️
+            </Text>
+          </Link>
+	</Box>
       </VStack>
       <Flex flex={1} justify="center" gap={1}>
         <NavDropdown />
