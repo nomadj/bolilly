@@ -26,19 +26,16 @@ const Navbar: FC<NavbarProps> = ({ onConnectWallet }) => {
       boxShadow="sm"
       >
       <VStack align="start" gap={0} pr={4}>
-        <Box ml={10}>
+
 	  <Link href="/">
 	    <Heading size="5xl" color="black">
-	      BoLilly
+	      BoLilly Live
             </Heading>
-      	    <Heading size="5xl" color="black">
-	      Live
-	    </Heading>
           </Link>
-      <Text fontSize="3xl" color="black" pl={2}>
+          <Text fontSize="3xl" color="black" pl={2}>
 	      ❤️
-            </Text>
-	</Box>
+          </Text>
+
       </VStack>
       <Flex flex={1} justify="center" gap={1}>
         <NavDropdown />
