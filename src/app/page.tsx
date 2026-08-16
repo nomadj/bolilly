@@ -15,7 +15,7 @@ export default function Home() {
     <Stack direction="column" gap={4} p={6}>
       <Box ml={10}>
         <Heading size="3xl" color="green">Local Talent, Live Streams</Heading>
-        <Text size="3xl" color="green">Next performer TBA</Text>
+      <Text ml={1} fontSize="lg" color="green">Next performer TBA</Text>
       </Box>
       <VideoGrid />
     </Stack>
