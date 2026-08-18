@@ -15,6 +15,21 @@ export default function JpoPage() {
       title: "JP at the FB",
       desc: "Snow by Red Hot Chili Peppers. Ferry Building SF, 08/15/2026",
     },
+    {
+      url: "https://violet-terrible-goose-933.mypinata.cloud/ipfs/QmZLoRtxiNet78h8mNnQJAaMaufATHXJpD785T73HAV93W",
+      title: "JP at the FB",
+      desc: "By the Way by Red Hot Chili Peppers. Ferry Building SF, 08/15/2026",
+    },
+    {
+      url: "https://violet-terrible-goose-933.mypinata.cloud/ipfs/Qmak8ZDaUXPyX2kCLP4R3AuQRtsgDgBvW4SrG2o8KxtBEf",
+      title: "JP at the FB",
+      desc: "Under the Bridge by Red Hot Chili Peppers. Ferry Building SF, 08/15/2026",
+    },
+    {
+      url: "https://violet-terrible-goose-933.mypinata.cloud/ipfs/QmeyDoxfDeg465fM83x2qhvRznHdP7vHyGYjdtotgzbVJC",
+      title: "JP at the FB",
+      desc: "Soul to Squeeze by Red Hot Chili Peppers. Ferry Building SF, 08/15/2026",
+    },    
   ];
 
   return (
