@@ -10,6 +10,11 @@ export default function JpoPage() {
       title: "JP at the FB",
       desc: "Better Man by Robbie Williams. Ferry Building SF, 08/15/2026",
     },
+    {
+      url: "https://violet-terrible-goose-933.mypinata.cloud/ipfs/QmNcUuXRbABRYfT54tFkxaZTCNHToevsbtV2NagsDhDSgV",
+      title: "JP at the FB",
+      desc: "Snow by Red Hot Chili Peppers. Ferry Building SF, 08/15/2026",
+    },
   ];
 
   return (
