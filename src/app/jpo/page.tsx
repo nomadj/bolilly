@@ -6,7 +6,7 @@ import ReactPlayer from "react-player";
 export default function JpoPage() {
   const videos = [
     {
-      url: "https://violet-terrible-goose-933.mypinata.cloud/ipfs/QmZJnxfiBibYwQgJzBvftW3qbpC6Qv8vjwcCjeFqgvrmNx",
+      url: "https://violet-terrible-goose-933.mypinata.cloud/ipfs/QmVgBa7HTB4saDDGeXDG8NhW9jLZMTKu3aVoNbksWQAyN3",
       title: "JP at the FB",
       desc: "Better Man by Robbie Williams. Ferry Building SF, 08/15/2026",
     },
@@ -41,7 +41,7 @@ export default function JpoPage() {
 		controls
 		width="100%"
 		height="100%"
-		style={{ position: "absolute", top: 0, left: 0 }}
+	        style={{ position: "absolute", top: 0, left: 0 }}
 	      />
 	    </Box>
 
