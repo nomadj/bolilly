@@ -14,8 +14,9 @@ export default function VideoGrid() {
         {videos.map((vid) => (
           <Box
             key={vid.key}
-            position="relative"
-            paddingTop="56.25%" // 16:9 aspect ratio
+            // position="relative"
+          // paddingTop="56.25%" // 16:9 aspect ratio
+	    aspectRatio="16/9"
             borderRadius="2xl"
             overflow="hidden"
             shadow="md"
@@ -25,8 +26,9 @@ export default function VideoGrid() {
 	      src={vid.url}
               width="100%"
               height="100%"
-              style={{ position: "absolute", top: 0, left: 0 }}
-              controls={true}
+              // style={{ position: "absolute", top: 0, left: 0 }}
+	      controls={true}
+	      light="/bryan_still.jpg"
             />
           </Box>
         ))}

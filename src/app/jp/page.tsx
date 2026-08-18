@@ -25,7 +25,7 @@ export default function JpoPage() {
       url: "https://violet-terrible-goose-933.mypinata.cloud/ipfs/Qmak8ZDaUXPyX2kCLP4R3AuQRtsgDgBvW4SrG2o8KxtBEf",
       title: "Under the Bridge",
       desc: "A Sunday evening at the Ferry Building, San Francisco, CA 08/15/2026",
-      img: "/jp_image3.png"
+      img: "/jp_image3.jpg"
     },
     // {
     //   url: "https://violet-terrible-goose-933.mypinata.cloud/ipfs/QmeyDoxfDeg465fM83x2qhvRznHdP7vHyGYjdtotgzbVJC",
