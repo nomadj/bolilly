@@ -2,7 +2,7 @@
 
 import { Box, Heading, Stack, Text } from "@chakra-ui/react";
 import VideoGrid from "@/components/VideoGrid";
-import HomePageConnectButton from "@/components/HomePageConnectButton";
+// import HomePageConnectButton from "@/components/HomePageConnectButton";
 // import dynamic from "next/dynamic";
 
 // const ConnectWalletPrompt = dynamic(

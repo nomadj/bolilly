@@ -2,7 +2,7 @@
 "use client";
 import { FC } from "react";
 import { Box, Link, Flex, Heading, VStack, Text } from "@chakra-ui/react";
-import DonateButton from "@/components/DonateButton";
+// import DonateButton from "@/components/DonateButton";
 import NavDropdown from "@/components/NavDropdown";
 
 interface NavbarProps {
@@ -40,9 +40,11 @@ const Navbar: FC<NavbarProps> = ({ onConnectWallet }) => {
       <Flex flex={1} justify="center" gap={1}>
         <NavDropdown />
       </Flex>
-      <DonateButton />
+      
     </Flex>
   );
 };
 
 export default Navbar;
+
+// <DonateButton /> Goes between last two </Flex>
