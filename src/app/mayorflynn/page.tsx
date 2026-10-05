@@ -11,6 +11,12 @@ export default function mayorFlynn() {
       desc: "Mayor Flynn Campaign Reel",
       img: "/mayor_flynn_with_dog.jpg"
     },
+    {
+      url: "/mayor_flynn_lowbit.mp4",
+      title: "Mayor Flynn",
+      desc: "Mayor Flynn Campaign Reel - low bitrate for web",
+      img: "/mayor_flynn_with_dog.jpg"
+    },    
     // {
     //   url: "https://violet-terrible-goose-933.mypinata.cloud/ipfs/QmNcUuXRbABRYfT54tFkxaZTCNHToevsbtV2NagsDhDSgV",
     //   title: "JP at the FB",
