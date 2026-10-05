@@ -37,7 +37,7 @@ export default function mayorFlynn() {
 
   return (
     <Box p={8}>
-      <Heading size="3xl" ml={20} mb={6}>JP</Heading>
+      <Heading size="3xl" ml={20} mb={6}>Mayor Flynn</Heading>
       <SimpleGrid
 	columns={{ base: 1, sm: 1, md: 3 }}
 	gap={6}
