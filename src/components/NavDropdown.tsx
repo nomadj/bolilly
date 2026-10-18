@@ -20,14 +20,8 @@ export default function NavDropdown() {
             <Menu.Item asChild value="press" _hover={{ boxShadow: "md", cursor: "pointer" }} >
               <Link href="/press">Press Kit</Link>
             </Menu.Item>
-            <Menu.Item asChild value="press" _hover={{ boxShadow: "md", cursor: "pointer" }} >
-              <Link href="/archives">Archives</Link>
-            </Menu.Item>
-            <Menu.Item asChild value="press" _hover={{ boxShadow: "md", cursor: "pointer" }} >
-              <Link href="/tickets">Tickets</Link>
-            </Menu.Item>
             <Menu.Item asChild value="chess" _hover={{ boxShadow: "md", cursor: "pointer" }} >
-              <Link href="/chess">Press Kit</Link>
+              <Link href="/chess">Chess</Link>
             </Menu.Item>
           </Menu.Content>
         </Menu.Positioner>
