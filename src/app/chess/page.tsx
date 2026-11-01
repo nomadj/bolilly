@@ -10,6 +10,11 @@ export default function ChessPage() {
       title: "Punish Scholar's Mate",
       desc: "What to do when your opponent opens with an insult",
     },
+    {
+      url: "https://youtube.com/shorts/ZmadiGBeDW8?si=MbAfbmum41rhkjgJ",
+      title: "e4 e5 Opening Trap",
+      desc: "High risk, high reward",
+    },    
   ];
 
   return (
