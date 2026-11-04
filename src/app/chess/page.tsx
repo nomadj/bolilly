@@ -14,7 +14,17 @@ export default function ChessPage() {
       url: "https://youtube.com/shorts/ZmadiGBeDW8?si=MbAfbmum41rhkjgJ",
       title: "e4 e5 Opening Trap",
       desc: "High risk, high reward",
-    },    
+    },
+    {
+      url: "https://youtube.com/shorts/cAT_4N8o6Do?si=M5ObIrgialafjpfA",
+      title: "Fried Liver Attack",
+      desc: "Gotham Chess Teaches Fried Liver Attack",
+    },            
+    {
+      url: "https://youtube.com/shorts/IlJK_bF9WyI?si=AgSci0kH895bIlIz",
+      title: "Counter the Fried Liver Attack",
+      desc: "Ponies and Cookies and Juicers, OH MY!",
+    },        
   ];
 
   return (
