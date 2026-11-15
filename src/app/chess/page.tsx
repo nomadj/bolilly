@@ -17,14 +17,19 @@ export default function ChessPage() {
     },
     {
       url: "https://youtube.com/shorts/cAT_4N8o6Do?si=M5ObIrgialafjpfA",
-      title: "Fried Liver Attack",
+      title: "Fried Liver Attackn",
       desc: "Gotham Chess Teaches Fried Liver Attack",
     },            
     {
       url: "https://youtube.com/shorts/IlJK_bF9WyI?si=AgSci0kH895bIlIz",
       title: "Counter the Fried Liver Attack",
       desc: "Ponies and Cookies and Juicers, OH MY!",
-    },        
+    },
+    {
+      url: "https://youtube.com/shorts/gCo9CuR92BI?si=c9WsaGLkh7qu84FW",
+      title: "King and Pawn Endgame",
+      desc: "Gotham Chess teaches outflanking to promote the pawn and win",
+    },            
   ];
 
   return (
