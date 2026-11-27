@@ -2,7 +2,7 @@ import { Box, SimpleGrid } from "@chakra-ui/react";
 import ReactPlayer from "react-player";
 
 const videos = [
-  { url: "https://violet-terrible-goose-933.mypinata.cloud/ipfs/bafybeigqf2iiehcpfhrxz6oenjrig72dazztho74mylacj6qryp4g2jq5q", title: "Classical Guitar", key: 2},
+  { url: "https://violet-terrible-goose-933.mypinata.cloud/ipfs/bafybeiacptayto6nwtzmujx5jwafh6c6yj7nzm7bhs5q4cmhyg4bcgza4u", title: "Classical Guitar", key: 2},
   // { url: "https://violet-terrible-goose-933.mypinata.cloud/ipfs/QmP3D6PCtB5XxY5zsN8WvF9p6FXmtZ21t8uQ3Tyzn7sW2S", title: "Classical Guitar", key: 2},  
   // { url: "https://livepeercdn.studio/hls/08c4bf68ag706hko/index.m3u8", title: "Live Stream", key: 3},
   // {url: "https://livepeercdn.studio/webrtc/08c4bf68ag706hko", title: "Daily Video", key: 4 }
